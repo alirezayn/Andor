@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "axios": "^1.5.1",
+    "blueimp-md5": "^2.19.0",
+    "google-images": "^2.1.0",
+    "swiper": "^10.3.0"
+  }
+}

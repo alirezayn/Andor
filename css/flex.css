@@ -1,10 +1,26 @@
 .flex{
     display: flex;
     align-items: center;
+    
 }
 .spaceBetween{
     justify-content: space-between;
 }
 .spaceAround{
     justify-content: space-around;
+}
+.justify-end{
+    justify-content: flex-start;
+}
+.justifyCenter{
+    justify-content: center;
+}
+.alignCenter{
+    align-items: center;
+}
+.rowReverse{
+    flex-direction: row-reverse;
+}
+.columnReverse{
+    flex-direction: column-reverse;
 }

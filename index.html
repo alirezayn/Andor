@@ -1,27 +1,108 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/reset.css"/>
-    <link rel="stylesheet" href="css/style.css" />
-    <link rel="stylesheet" href="css/flex.css" />
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Andor</title>
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="scss/style.css" />
+    <link rel="stylesheet" href="css/flex.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css"
+    />
+    <script src="js/md5.min.js"></script>
     <script src="js/script.js"></script>
-</head>
-<body>
-    <nav class="mainNav flex spaceAround">
-        <ul>
-            <li><a>خانه</a></li>
-            <li><a>محصولات</a></li>
-            <li><a></a></li>
-            <li><a></a></li>
-            <li><a></a></li>
-            <li><a></a></li>
-        </ul>
-        <div class="search">
+    <script
+      src="https://kit.fontawesome.com/4e4babe166.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+  </head>
 
+  <body>
+    <header>
+      <!-- navigation -->
+      <nav class="mainNav flex rowReverse spaceBetween">
+        <div class="rightContainer flex alignCenter spaceAround">
+          <img
+            width="48"
+            height="48"
+            src="https://img.icons8.com/color/48/star-wars.png"
+            alt="star-wars"
+          />
+          <a href="#" class="sign-in">Sign-in</a>
         </div>
-    </nav>
-</body>
+        <div class="middleContainer flex">
+          <ul class="flex alignCenter spaceAround">
+            <li><a href="#" class="links">Movie</a></li>
+            <li><a href="#" class="links">Characters</a></li>
+            <li><a href="#" class="links">Species</a></li>
+            <li><a href="#" class="links">Ships</a></li>
+            <li><a href="#" class="links">Starships</a></li>
+            <li><a href="#" class="links">Vehicles</a></li>
+            <li><a href="#" class="links">Planets</a></li>
+          </ul>
+        </div>
+        <div class="leftContainer flex alignCenter justifyCenter">
+          <i class="fa-solid fa-magnifying-glass searchIcon"></i>
+          <input class="searchBox" type="text" placeholder="search..." />
+        </div>
+      </nav>
+      <!-- navigation -->
+    </header>
+
+    <main>
+      <div class="swiper mySwiper">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide">
+            <img src="https://www.museumsworcestershire.org.uk/wp-content/uploads/2019/06/1-Copy.png" alt="star-wars" class="image">
+          </div>
+          <div class="swiper-slide">
+            <img src="https://www.museumsworcestershire.org.uk/wp-content/uploads/2019/06/1-Copy.png" alt="star-wars" class="image">
+
+          </div>
+          <div class="swiper-slide">
+            <img src="https://img.reality.news/img/78/25/63629494150030/0/may-fourth-be-with-you-big-role-will-ar-play-star-wars-land.1280x600.jpg" alt="helloo" class="image">
+          </div>
+          <div class="swiper-slide">Slide 4</div>
+          <div class="swiper-slide">Slide 5</div>
+          <div class="swiper-slide">Slide 6</div>
+          <div class="swiper-slide">Slide 7</div>
+          <div class="swiper-slide">Slide 8</div>
+          <div class="swiper-slide">Slide 9</div>
+        </div>
+        <div class="nextPrev">
+          <div class="swiper-button-next "><i class="fa-solid fa-angle-right"></i></div>
+          <div class="swiper-button-prev"><i class="fa-solid fa-angle-left"></i></div>
+        </div>
+        <div class="myPagination">
+          <div class="swiper-pagination"></div>
+        </div>
+      </div>
+      <div class="padding">
+        <span>Planets</span>
+        <div id="planets" class="planets">
+        </div>
+      </div>
+      <button id="next" onclick="getNextPlanets()" >next</button>
+      <button id="prev" onclick="getPrevPlanets()" >prev</button>
+      
+    </main>
+
+    <script>
+      var swiper = new Swiper(".mySwiper", {
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev",
+        },
+        pagination: {
+          el: ".swiper-pagination",
+          dynamicBullets: true,
+        },
+      });
+    </script>
+
+
+  </body>
 </html>
