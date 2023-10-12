@@ -21,6 +21,9 @@
 .rowReverse{
     flex-direction: row-reverse;
 }
+.column{
+    flex-direction: column;
+}
 .columnReverse{
     flex-direction: column-reverse;
 }

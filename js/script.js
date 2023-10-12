@@ -3,48 +3,85 @@ const getFetchUrl = async (url) => {
   const response = await request.json();
   return response;
 };
+let residentsUrl = 0;
 
 let page = 1;
 var url = `https://swapi.dev/api/planets/?page=${page}`;
+
+const characterHandler = async (planet) => {
+  if (!document.getElementById(`${planet} characters`)) {
+    const urls = `https://swapi.dev/api/planets/?search=${planet}`;
+    let data = await getFetchUrl(urls);
+    let resident = data.results.map((item) => item.residents);
+    resident.map((value) => {
+      // if(!document.getElementById('noResident')){
+      //   if(value == 0 ){
+      //     let span = document.createElement('span')
+      //     span.id = "noResident"
+      //     let text = document.createTextNode('no resident')
+      //     span.appendChild(text)
+      //     return document.getElementById(planet).appendChild(span)
+      //   }
+      // }
+      return value.map((url) => {
+        async function character() {
+          let char = url ? await getFetchUrl(url) : console.log(false);
+          let div = document.createElement("div");
+          div.id = planet + " characters";
+          div.classList = "flex column";
+          document.getElementById(planet).appendChild(div);
+          let span = document.createElement("span");
+          span.id = char.name;
+          let name = document.createTextNode(char.name);
+          span.appendChild(name);
+          return document
+          .getElementById(`${planet} characters`)
+          .appendChild(span);
+          
+        }
+        return character();
+      });
+    });
+  }
+};
+
 const getPlanets = async () => {
   const planet = await getFetchUrl(url);
-  let residents = planet.results.map((item) => item.residents);
-  
   let planets = `
   <div class="tab flex spaceBetween">
         ${planet.results
           .map((item) => {
-            return `<button id="${item.name + ' planets'}" class="tablinks" onclick="openCity(event, '${item.name}')">${item.name}</button>`;
+            return `<button id="${
+              item.name + " planets"
+            }" class="tablinks" onclick="openCity(event, '${
+              item.name
+            }');characterHandler('${item.name}')">${item.name}</button>`;
           })
           .join("")}
       </div>
       ${planet.results
         .map((item) => {
+          // residentsUrl.push({planet:item.name,resident:item.residents});
           return `
-          <div id="${item.name}" class="tabcontent">
+          <div id="${item.name}" class="flex column tabcontent">
             <h3>${item.rotation_period}</h3>
             <p>${item.name} is the capital city of England.</p>
+           
           </div>
           `;
         })
         .join("")}
       
   `;
-  if (planet.previous == null) {
-    document.getElementById("prev").disabled = true;
-  } else {
-    document.getElementById("prev").disabled = false;
-  }
-  if (planet.next == null) {
-    document.getElementById("next").disabled = true;
-  } else {
-    document.getElementById("next").disabled = false;
-  }
-
+  // console.log(residentsUrl)
+  document.getElementById("prev").disabled =
+    planet.previous == null ? true : false;
+  document.getElementById("next").disabled = planet.next == null ? true : false;
   document.getElementById("planets").innerHTML = planets;
 
-  document.getElementById(`${planet.results[0].name + ' planets'}`).click();
+  document.getElementById(`${planet.results[0].name + " planets"}`).click();
 };
+
 getPlanets();
 
 const getNextPlanets = () => {
@@ -84,3 +121,8 @@ function openCity(evt, cityName) {
   document.getElementById(cityName).style.display = "block";
   evt.currentTarget.className += " active";
 }
+
+// const myplanet = async ()=>{
+//   console.log(character)
+// }
+// myplanet()

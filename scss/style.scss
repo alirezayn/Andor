@@ -245,14 +245,15 @@ body {
   /* Style the buttons that are used to open the tab content */
   .tab button {
     color: white;
-    background-color: inherit;
+    background-color: #414141;
     border: none;
     outline: none;
     cursor: pointer;
     padding: $globalPadding;
     transition: 0.3s;
     font-weight: 500;
-    font-size: large;
+    font-size: medium;
+    border-radius: $globalRadius
   }
   
   /* Change background color of buttons on hover */
