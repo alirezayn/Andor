@@ -1,7 +1,5 @@
 .flex{
-    display: flex;
-    align-items: center;
-    
+    display: flex;    
 }
 .spaceBetween{
     justify-content: space-between;
@@ -9,8 +7,11 @@
 .spaceAround{
     justify-content: space-around;
 }
-.justify-end{
+.justify-start{
     justify-content: flex-start;
+}
+.justify-end{
+    justify-content: flex-end;
 }
 .justifyCenter{
     justify-content: center;

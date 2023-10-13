@@ -1,49 +1,11 @@
 const getFetchUrl = async (url) => {
   let request = await fetch(url);
-  const response = await request.json();
+  let response = await request.json();
   return response;
 };
-let residentsUrl = 0;
 
 let page = 1;
 var url = `https://swapi.dev/api/planets/?page=${page}`;
-
-const characterHandler = async (planet) => {
-  if (!document.getElementById(`${planet} characters`)) {
-    const urls = `https://swapi.dev/api/planets/?search=${planet}`;
-    let data = await getFetchUrl(urls);
-    let resident = data.results.map((item) => item.residents);
-    resident.map((value) => {
-      // if(!document.getElementById('noResident')){
-      //   if(value == 0 ){
-      //     let span = document.createElement('span')
-      //     span.id = "noResident"
-      //     let text = document.createTextNode('no resident')
-      //     span.appendChild(text)
-      //     return document.getElementById(planet).appendChild(span)
-      //   }
-      // }
-      return value.map((url) => {
-        async function character() {
-          let char = url ? await getFetchUrl(url) : console.log(false);
-          let div = document.createElement("div");
-          div.id = planet + " characters";
-          div.classList = "flex column";
-          document.getElementById(planet).appendChild(div);
-          let span = document.createElement("span");
-          span.id = char.name;
-          let name = document.createTextNode(char.name);
-          span.appendChild(name);
-          return document
-          .getElementById(`${planet} characters`)
-          .appendChild(span);
-          
-        }
-        return character();
-      });
-    });
-  }
-};
 
 const getPlanets = async () => {
   const planet = await getFetchUrl(url);
@@ -66,7 +28,8 @@ const getPlanets = async () => {
           <div id="${item.name}" class="flex column tabcontent">
             <h3>${item.rotation_period}</h3>
             <p>${item.name} is the capital city of England.</p>
-           
+             <div id="${item.name + " characters"}" class="flex column characters">
+             </div>
           </div>
           `;
         })
@@ -84,6 +47,22 @@ const getPlanets = async () => {
 
 getPlanets();
 
+const characterHandler = async (resident) => {
+  const urls = `https://swapi.dev/api/planets/?search=${resident}`;
+  let planet = await getFetchUrl(urls);
+  let arrPlanet = planet.results[0];
+  planet = await Promise.all(
+    arrPlanet.residents.map((url) => {
+      return getFetchUrl(url);
+    })
+  );
+  document.getElementById(`${resident + " characters"}`).innerHTML =
+    planet.length == 0
+      ? "<span>no resident</span>"
+      : planet.map((item) => {
+          return `<span class="border">${item.name}</span>`;
+        }).join('');
+};
 const getNextPlanets = () => {
   page += 1;
   url = `https://swapi.dev/api/planets/?page=${page}`;
