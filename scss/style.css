@@ -4,6 +4,10 @@ body {
   background-color: #212121;
 }
 
+.radius {
+  border-radius: 15px;
+}
+
 .padding {
   box-sizing: border-box;
   padding: 15px;

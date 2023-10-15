@@ -1,9 +1,27 @@
+
+const publicKey = '2fb5e6107782fc48964c90effc9101c6';
+const privateKey = '79c9338b1b1f2e3488f4c8af7573dcd088de5e68';
+const apiBaseURL = "https://gateway.marvel.com/v1/public";
+const ts = Date.now();
+const hash = md5(ts + privateKey + publicKey)
+// const params = new URLSearchParams({
+//   ts:ts,
+//   apikey:publicKey,
+//   hash:md5(ts + privateKey + publicKey  )
+// })
+
+const hero_name = "black panther"
+const marvel = `https://gateway.marvel.com:443/v1/public/characters?name=${hero_name}&ts=${ts}&apikey=${publicKey}&hash=${hash}`;
+
+// const endpoint = marvel + params
+// console.log(endpoint)
+
+
 const getFetchUrl = async (url) => {
   let request = await fetch(url);
   let response = await request.json();
   return response;
-};
-
+}
 let page = 1;
 var url = `https://swapi.dev/api/planets/?page=${page}`;
 
@@ -23,12 +41,18 @@ const getPlanets = async () => {
       </div>
       ${planet.results
         .map((item) => {
-          // residentsUrl.push({planet:item.name,resident:item.residents});
           return `
           <div id="${item.name}" class="flex column tabcontent">
+          <img src="./images/planets/${
+            item.name
+          }.jpg" width="200" height="200" class="radius"/>
             <h3>${item.rotation_period}</h3>
             <p>${item.name} is the capital city of England.</p>
-             <div id="${item.name + " characters"}" class="flex column characters">
+             <div id="${
+               item.name + " characters"
+             }" class="flex column characters">
+             </div>
+             <div id="${item.name + " film"}" class="flex column characters">
              </div>
           </div>
           `;
@@ -47,8 +71,8 @@ const getPlanets = async () => {
 
 getPlanets();
 
-const characterHandler = async (resident) => {
-  const urls = `https://swapi.dev/api/planets/?search=${resident}`;
+const characterHandler = async (planets) => {
+  const urls = `https://swapi.dev/api/planets/?search=${planets}`;
   let planet = await getFetchUrl(urls);
   let arrPlanet = planet.results[0];
   planet = await Promise.all(
@@ -56,13 +80,28 @@ const characterHandler = async (resident) => {
       return getFetchUrl(url);
     })
   );
-  document.getElementById(`${resident + " characters"}`).innerHTML =
+  let film = await Promise.all(
+    arrPlanet.films.map((url) => {
+      return getFetchUrl(url);
+    })
+  );
+  // film.map(item=>console.log(item.title))
+  document.getElementById(`${planets + " characters"}`).innerHTML =
     planet.length == 0
       ? "<span>no resident</span>"
-      : planet.map((item) => {
-          return `<span class="border">${item.name}</span>`;
-        }).join('');
+      : planet
+          .map((item) => {
+            return `<span class="border">${item.name}</span>`;
+          })
+          .join("");
+
+  document.getElementById(`${planets + " film"}`).innerHTML = film
+    .map((item) => {
+      return `<span>${item.title}</span>`;
+    })
+    .join("");
 };
+
 const getNextPlanets = () => {
   page += 1;
   url = `https://swapi.dev/api/planets/?page=${page}`;

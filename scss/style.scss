@@ -11,7 +11,9 @@ body {
     font-family: 'Inter';
     background-color: #212121;
 }
-
+.radius{
+    border-radius: 15px;
+}
 .padding {
     box-sizing: border-box;
     padding: 15px;
@@ -279,3 +281,4 @@ body {
     height: 300px;
     border: 1px solid white;
   }
+  
